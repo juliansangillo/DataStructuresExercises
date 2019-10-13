@@ -5,7 +5,7 @@
              "name": "GDB Launch",
              "type": "cppdbg",
              "request": "launch",
-             "program": "${workspaceFolder}\\Bin\\yourProgramName.exe",
+             "program": "${workspaceFolder}\\Bin\\LinkedList.exe",
              "args": [],
              "stopAtEntry": true,
              "cwd": "${workspaceFolder}",
