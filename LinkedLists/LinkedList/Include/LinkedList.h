@@ -1,6 +1,9 @@
 #ifndef _LINKEDLIST_H
 #define _LINKEDLIST_H
 
+#include "negative_index_exception.h"
+#include "index_out_of_bounds.h"
+
 template<class T>
 class Node {
     private:
@@ -35,6 +38,25 @@ class Node {
 
 template<class T>
 class LinkedList {
+    private:
+        int length;
+
+        Node<T>* traverse(int index) const throw() {
+
+            if(index < 0)
+                throw negative_index_exception(index);
+            else if(index >= this->length)
+                throw index_out_of_bounds(index);
+
+            Node<T>* current = head;
+            int counter = 0;
+            while(counter != index) {
+                current = current->next;
+                counter++;
+            }
+
+            return current;
+        }
     public:
         Node<T>* head;
         Node<T>* tail;
@@ -43,6 +65,8 @@ class LinkedList {
 
             head = new Node<T>(value);
             tail = head;
+
+            this->length = 1;
 
         }
 
@@ -66,6 +90,8 @@ class LinkedList {
             node->next = head;
             head = node;
 
+            this->length++;
+
         }
 
         void append(T value) {
@@ -75,21 +101,22 @@ class LinkedList {
             tail->next = node;
             tail = node;
 
+            this->length++;
+
         }
 
-        Node<T>* traverse(int index) {
+        T find(int index) const throw() {
+
+            return this->traverse(index)->getVal();
+        }
+
+        void insert(int index, T value) const throw() {
 
             
 
         }
 
-        void insert(int index, T value) {
-
-            
-
-        }
-
-        void remove(int index) {
+        void remove(int index) const throw() {
 
 
 

@@ -16,6 +16,9 @@ int main() {
         cout << current->getVal() << endl;
         current = current->next;
     }
+    cout << endl;
+
+    cout << list.find(1);
 
     return 0;
 }
