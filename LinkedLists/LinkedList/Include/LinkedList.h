@@ -202,7 +202,7 @@ class DoublyLinkedList : public LinkedList<T> {
             else if(index >= this->length)
                 throw index_out_of_bounds();
 
-            DoubleNode<T>* current = this->tail;
+            DoubleNode<T>* current = static_cast<DoubleNode<T>*>(this->tail);
             int counter = this->length - 1;
             while(counter != index) {
                 current = current->prev;
@@ -225,6 +225,19 @@ class DoublyLinkedList : public LinkedList<T> {
 
         }
 
+        bool isInFront(int index) const {
+
+            int mid;
+            if(this->length % 2)
+                mid = this->length / 2;
+            else
+                mid = (this->length - 1) / 2;
+
+            if(index <= mid)
+                return true;
+            else
+                return false;    
+        }
     public:
         DoublyLinkedList() : LinkedList<T>::LinkedList() {}
         /*Overriden Functions*/
@@ -262,7 +275,10 @@ class DoublyLinkedList : public LinkedList<T> {
 
         T find(int index) const throw() {
 
-            return this->traverse(index)->getVal();
+            if(this->isInFront(index))
+                return this->traverse(index)->getVal();
+            else
+                return this->reverseTraverse(index)->getVal();
         }
 
         void insert(int index, T value) throw() {
@@ -276,13 +292,19 @@ class DoublyLinkedList : public LinkedList<T> {
                 return;
             }
 
-            Node<T>* pre = this->traverse(index - 1);
-            Node<T>* post = pre->next;
+            DoubleNode<T>* post;
+            if(this->isInFront(index - 1))
+                post = static_cast<DoubleNode<T>*>(this->traverse(index));
+            else
+                post = this->reverseTraverse(index);
+            DoubleNode<T>* pre = post->prev;
 
-            Node<T>* node = new Node<T>(value);
+            DoubleNode<T>* node = new DoubleNode<T>(value);
 
             pre->next = node;
+            node->prev = pre;
             node->next = post;
+            post->prev = node;
 
             this->length++;
 
@@ -297,9 +319,13 @@ class DoublyLinkedList : public LinkedList<T> {
             else if(index == this->length)
                 throw index_out_of_bounds();
 
-            Node<T>* pre = this->traverse(index - 1);
-            Node<T>* garbageNode = pre->next;
-            Node<T>* post = pre->next->next;
+            DoubleNode<T>* garbageNode;
+            if(this->isInFront(index))
+                garbageNode = static_cast<DoubleNode<T>*>(this->traverse(index));
+            else
+                garbageNode = this->reverseTraverse(index);
+            DoubleNode<T>* pre = garbageNode->prev;
+            DoubleNode<T>* post = static_cast<DoubleNode<T>*>(garbageNode->next);
 
             garbageNode->next = NULL;
             pre->next = post;
