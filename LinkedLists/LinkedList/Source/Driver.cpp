@@ -20,10 +20,7 @@ int main() {
         current = current->next;
     }
     cout << endl;
-
-    cout << list.head->getVal() << endl;
-    cout << list.tail->getVal() << endl;
-
+    
     cout << list.find(2);
 
     return 0;

@@ -38,7 +38,7 @@ class Node {
 
 template<class T>
 class LinkedList {
-    private:
+    protected:
         int length;
 
         Node<T>* traverse(int index) const throw() {
@@ -166,6 +166,60 @@ class LinkedList {
             this->length--;
 
         }
+};
+
+template<class T>
+class DoubleNode : public Node {
+    public:
+        DoubleNode<T>* prev;
+
+        DoubleNode(T value) : Node(value) {
+
+            this->prev = NULL;
+
+        }
+
+        ~DoubleNode() {
+
+            this->prev = NULL;
+
+        }
+};
+
+template<class T>
+class DoublyLinkedList : public LinkedList {
+    private:
+        DoubleNode<T>* reverseTraverse(int index) const throw() {
+
+            if(index < 0)
+                throw negative_index_exception();
+            else if(index >= this->length)
+                throw index_out_of_bounds();
+
+            DoubleNode<T>* current = tail;
+            int counter = this->length - 1;
+            while(counter != index) {
+                current = current->prev;
+                counter--;
+            }
+
+            return current;
+
+        }
+
+        void dropTail() {
+
+            Node<T>* garbage = tail;
+            tail = tail->prev;
+
+            delete garbage;
+            garbage = NULL;
+
+            this->length--;
+
+        }
+
+        
 };
 
 #endif
