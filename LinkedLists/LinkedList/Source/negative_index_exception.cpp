@@ -1,13 +1,8 @@
-#include <sstream>
-
 #include "negative_index_exception.h"
 
-negative_index_exception::negative_index_exception(int index) {
+negative_index_exception::negative_index_exception() {
 
-    std::stringstream stream;
-    stream << "Index entered [" << index << "]. Index cannot be negative!";
-
-    msg = stream.str();
+    msg = "Index cannot be negative!";
 
 }
 

@@ -7,7 +7,7 @@ class index_out_of_bounds : public std::exception {
     private:
         std::string msg;
     public:
-        index_out_of_bounds(int index);
+        index_out_of_bounds();
         virtual const char* what() const throw();
 };
 

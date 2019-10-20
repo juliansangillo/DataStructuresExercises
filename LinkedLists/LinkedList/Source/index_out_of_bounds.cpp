@@ -2,12 +2,9 @@
 
 #include <sstream>
 
-index_out_of_bounds::index_out_of_bounds(int index) {
+index_out_of_bounds::index_out_of_bounds() {
 
-    std::stringstream stream;
-    stream << "Index entered [" << index << "]. Index does not exist in linked list. Please try again!";
-
-    msg = stream.str();
+    msg = "Index does not exist in linked list. Please try again!";
 
 }
 

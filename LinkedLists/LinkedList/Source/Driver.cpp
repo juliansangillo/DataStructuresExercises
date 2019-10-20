@@ -11,6 +11,9 @@ int main() {
     list.append(15);
     list.prepend(5);
 
+    list.insert(2, 999);
+    list.remove(1);
+
     Node<int>* current = list.head;
     while(current != NULL) {
         cout << current->getVal() << endl;
@@ -18,7 +21,7 @@ int main() {
     }
     cout << endl;
 
-    cout << list.find(1);
+    cout << list.find(2);
 
     return 0;
 }

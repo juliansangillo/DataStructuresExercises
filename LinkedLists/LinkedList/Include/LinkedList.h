@@ -44,9 +44,9 @@ class LinkedList {
         Node<T>* traverse(int index) const throw() {
 
             if(index < 0)
-                throw negative_index_exception(index);
+                throw negative_index_exception();
             else if(index >= this->length)
-                throw index_out_of_bounds(index);
+                throw index_out_of_bounds();
 
             Node<T>* current = head;
             int counter = 0;
@@ -78,6 +78,8 @@ class LinkedList {
 
                 delete node;
                 node = NULL;
+
+                this->length--;
             }
 
             tail = NULL;
@@ -105,20 +107,78 @@ class LinkedList {
 
         }
 
+        void dropHead() {
+
+            Node<T>* garbage = head;
+            head = head->next;
+
+            delete garbage;
+            garbage = NULL;
+
+            this->length--;
+
+        }
+
+        void dropTail() {
+
+            Node<T>* garbage = tail;
+            tail = this->traverse(this->length - 2);
+
+            delete garbage;
+            garbage = NULL;
+
+            this->length--;
+
+        }
+
         T find(int index) const throw() {
 
             return this->traverse(index)->getVal();
         }
 
-        void insert(int index, T value) const throw() {
+        void insert(int index, T value) throw() {
 
-            
+            if(index == 0) {
+                this->prepend(value);
+                return;
+            }
+            else if(index == this->length) {
+                this->append(value);
+                return;
+            }
+
+            Node<T>* pre = this->traverse(index - 1);
+            Node<T>* post = pre->next;
+
+            Node<T>* node = new Node<T>(value);
+
+            pre->next = node;
+            node->next = post;
+
+            this->length++;
 
         }
 
-        void remove(int index) const throw() {
+        void remove(int index) throw() {
 
+            if(index == 0) {
+                this->dropHead();
+                return;
+            }
+            else if(index == this->length)
+                throw index_out_of_bounds();
 
+            Node<T>* pre = this->traverse(index - 1);
+            Node<T>* garbageNode = pre->next;
+            Node<T>* post = pre->next->next;
+
+            garbageNode->next = NULL;
+            pre->next = post;
+
+            delete garbageNode;
+            garbageNode = NULL;
+
+            this->length--;
 
         }
 };

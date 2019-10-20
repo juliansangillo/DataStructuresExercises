@@ -7,7 +7,7 @@ class negative_index_exception : public std::exception {
     private:
         std::string msg;
     public:
-        negative_index_exception(int index);
+        negative_index_exception();
         virtual const char* what() const throw();
 };
 
