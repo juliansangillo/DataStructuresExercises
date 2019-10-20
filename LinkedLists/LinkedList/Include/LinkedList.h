@@ -76,6 +76,24 @@ class LinkedList {
             tail = node;
 
         }
+
+        Node<T>* traverse(int index) {
+
+            
+
+        }
+
+        void insert(int index, T value) {
+
+            
+
+        }
+
+        void remove(int index) {
+
+
+
+        }
 };
 
 #endif

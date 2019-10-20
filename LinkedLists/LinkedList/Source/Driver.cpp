@@ -11,10 +11,11 @@ int main() {
     list.append(15);
     list.prepend(5);
 
-    cout << list.head->getVal() << endl;
-    cout << list.head->next->getVal() << endl;
-    cout << list.head->next->next->getVal() << endl;
-    cout << list.head->next->next->next << endl;
+    Node<int>* current = list.head;
+    while(current != NULL) {
+        cout << current->getVal() << endl;
+        current = current->next;
+    }
 
     return 0;
 }
