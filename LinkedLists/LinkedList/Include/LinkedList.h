@@ -57,6 +57,18 @@ class LinkedList {
 
             return current;
         }
+
+        void dropHead() {
+
+            Node<T>* garbage = head;
+            head = head->next;
+
+            delete garbage;
+            garbage = NULL;
+
+            this->length--;
+
+        }
     public:
         Node<T>* head;
         Node<T>* tail;
@@ -72,15 +84,8 @@ class LinkedList {
 
         ~LinkedList() {
 
-            while(head != NULL) {
-                Node<T>* node = head;
-                head = head->next;
-
-                delete node;
-                node = NULL;
-
-                this->length--;
-            }
+            while(head != NULL)
+                this->dropHead();
 
             tail = NULL;
         }
@@ -104,30 +109,6 @@ class LinkedList {
             tail = node;
 
             this->length++;
-
-        }
-
-        void dropHead() {
-
-            Node<T>* garbage = head;
-            head = head->next;
-
-            delete garbage;
-            garbage = NULL;
-
-            this->length--;
-
-        }
-
-        void dropTail() {
-
-            Node<T>* garbage = tail;
-            tail = this->traverse(this->length - 2);
-
-            delete garbage;
-            garbage = NULL;
-
-            this->length--;
 
         }
 
@@ -174,6 +155,10 @@ class LinkedList {
 
             garbageNode->next = NULL;
             pre->next = post;
+
+            if(garbageNode == tail) {
+                tail = pre;
+            }
 
             delete garbageNode;
             garbageNode = NULL;
