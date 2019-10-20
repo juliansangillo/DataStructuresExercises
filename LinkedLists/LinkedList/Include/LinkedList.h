@@ -58,7 +58,7 @@ class LinkedList {
             return current;
         }
 
-        void dropHead() {
+        void removeHead() {
 
             Node<T>* garbage = head;
             head = head->next;
@@ -73,19 +73,19 @@ class LinkedList {
         Node<T>* head;
         Node<T>* tail;
 
-        LinkedList(T value) {
+        LinkedList() {
 
-            head = new Node<T>(value);
-            tail = head;
+            head = NULL;
+            tail = NULL;
 
-            this->length = 1;
+            this->length = 0;
 
         }
 
         ~LinkedList() {
 
             while(head != NULL)
-                this->dropHead();
+                this->removeHead();
 
             tail = NULL;
         }
@@ -94,7 +94,10 @@ class LinkedList {
 
             Node<T>* node = new Node<T>(value);
 
-            node->next = head;
+            if(head != NULL)
+                node->next = head;
+            else
+                tail = node;
             head = node;
 
             this->length++;
@@ -105,7 +108,10 @@ class LinkedList {
 
             Node<T>* node = new Node<T>(value);
 
-            tail->next = node;
+            if(tail != NULL)
+                tail->next = node;
+            else
+                head = node;
             tail = node;
 
             this->length++;
@@ -143,7 +149,7 @@ class LinkedList {
         void remove(int index) throw() {
 
             if(index == 0) {
-                this->dropHead();
+                this->removeHead();
                 return;
             }
             else if(index == this->length)
@@ -169,11 +175,11 @@ class LinkedList {
 };
 
 template<class T>
-class DoubleNode : public Node {
+class DoubleNode : public Node<T> {
     public:
         DoubleNode<T>* prev;
 
-        DoubleNode(T value) : Node(value) {
+        DoubleNode(T value) : Node<T>::Node(value) {
 
             this->prev = NULL;
 
@@ -187,7 +193,7 @@ class DoubleNode : public Node {
 };
 
 template<class T>
-class DoublyLinkedList : public LinkedList {
+class DoublyLinkedList : public LinkedList<T> {
     private:
         DoubleNode<T>* reverseTraverse(int index) const throw() {
 
@@ -196,7 +202,7 @@ class DoublyLinkedList : public LinkedList {
             else if(index >= this->length)
                 throw index_out_of_bounds();
 
-            DoubleNode<T>* current = tail;
+            DoubleNode<T>* current = this->tail;
             int counter = this->length - 1;
             while(counter != index) {
                 current = current->prev;
@@ -207,10 +213,10 @@ class DoublyLinkedList : public LinkedList {
 
         }
 
-        void dropTail() {
+        void removeTail() {
 
-            Node<T>* garbage = tail;
-            tail = tail->prev;
+            Node<T>* garbage = this->tail;
+            this->tail = this->tail->prev;
 
             delete garbage;
             garbage = NULL;
@@ -219,7 +225,95 @@ class DoublyLinkedList : public LinkedList {
 
         }
 
-        
+    public:
+        DoublyLinkedList() : LinkedList<T>::LinkedList() {}
+        /*Overriden Functions*/
+        void prepend(T value) {
+
+            DoubleNode<T>* node = new DoubleNode<T>(value);
+
+            if(this->head != NULL) {
+                node->next = this->head;
+                static_cast<DoubleNode<T>*>(this->head)->prev = node;
+            }
+            else
+                this->tail = node;
+            this->head = node;
+
+            this->length++;
+
+        }
+
+        void append(T value) {
+
+            DoubleNode<T>* node = new DoubleNode<T>(value);
+
+            if(this->tail != NULL) {
+                this->tail->next = node;
+                node->prev = static_cast<DoubleNode<T>*>(this->tail);
+            }
+            else
+                this->head = node;
+            this->tail = node;
+
+            this->length++;
+
+        }
+
+        T find(int index) const throw() {
+
+            return this->traverse(index)->getVal();
+        }
+
+        void insert(int index, T value) throw() {
+
+            if(index == 0) {
+                this->prepend(value);
+                return;
+            }
+            else if(index == this->length) {
+                this->append(value);
+                return;
+            }
+
+            Node<T>* pre = this->traverse(index - 1);
+            Node<T>* post = pre->next;
+
+            Node<T>* node = new Node<T>(value);
+
+            pre->next = node;
+            node->next = post;
+
+            this->length++;
+
+        }
+
+        void remove(int index) throw() {
+
+            if(index == 0) {
+                this->removeHead();
+                return;
+            }
+            else if(index == this->length)
+                throw index_out_of_bounds();
+
+            Node<T>* pre = this->traverse(index - 1);
+            Node<T>* garbageNode = pre->next;
+            Node<T>* post = pre->next->next;
+
+            garbageNode->next = NULL;
+            pre->next = post;
+
+            if(garbageNode == this->tail) {
+                this->tail = pre;
+            }
+
+            delete garbageNode;
+            garbageNode = NULL;
+
+            this->length--;
+
+        }
 };
 
 #endif
