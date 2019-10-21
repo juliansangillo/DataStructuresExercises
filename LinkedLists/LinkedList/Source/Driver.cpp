@@ -16,17 +16,25 @@ int main() {
     list.insert(2, 999);
     list.remove(1);
 
-    Node<int>* current = list.head;
-    while(current != NULL) {
-        cout << current->getVal() << endl;
-        current = current->next;
+    Node<int>* current1 = list.head;
+    while(current1 != NULL) {
+        cout << current1->getVal() << endl;
+        current1 = current1->next;
     }
     cout << endl;
-    
-    cout << "Head = " << list.head->getVal() << "; Prev = " << static_cast<DoubleNode<int>*>(list.head)->prev << "; Next = " << list.head->next->getVal() << endl;
-    cout << "Tail = " << list.tail->getVal() << "; Prev = " << static_cast<DoubleNode<int>*>(list.tail)->prev->getVal() << "; Next = " << list.tail->next << endl << endl;
 
-    cout << list.find(1) << endl;
+    cout << "Index 1 = " << list.find(1) << endl;
+
+    cout << endl;
+
+    DoubleNode<int>* current2 = static_cast<DoubleNode<int>*>(list.tail);
+    while(current2 != NULL) {
+        cout << current2->getVal() << endl;
+        current2 = current2->prev;
+    }
+    cout << endl;
+
+    cout << "Index 1 = " << list.find(1) << endl;
 
     return 0;
 }

@@ -213,18 +213,6 @@ class DoublyLinkedList : public LinkedList<T> {
 
         }
 
-        void removeTail() {
-
-            Node<T>* garbage = this->tail;
-            this->tail = this->tail->prev;
-
-            delete garbage;
-            garbage = NULL;
-
-            this->length--;
-
-        }
-
         bool isInFront(int index) const {
 
             int mid;
@@ -240,7 +228,7 @@ class DoublyLinkedList : public LinkedList<T> {
         }
     public:
         DoublyLinkedList() : LinkedList<T>::LinkedList() {}
-        /*Overriden Functions*/
+
         void prepend(T value) {
 
             DoubleNode<T>* node = new DoubleNode<T>(value);
@@ -328,7 +316,10 @@ class DoublyLinkedList : public LinkedList<T> {
             DoubleNode<T>* post = static_cast<DoubleNode<T>*>(garbageNode->next);
 
             garbageNode->next = NULL;
+            garbageNode->prev = NULL;
             pre->next = post;
+            if(post != NULL)
+                post->prev = pre;
 
             if(garbageNode == this->tail) {
                 this->tail = pre;
