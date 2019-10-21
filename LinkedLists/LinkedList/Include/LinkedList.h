@@ -357,6 +357,32 @@ class DoublyLinkedList : public LinkedList<T> {
             this->length--;
 
         }
+
+        void reverse() {
+
+            if(this->length == 0 || this->length == 1)
+                return;
+
+            DoubleNode<T>* pt1;
+            DoubleNode<T>* pt2;
+
+            pt1 = static_cast<DoubleNode<T>*>(this->head);
+            pt2 = static_cast<DoubleNode<T>*>(this->head->next);
+            
+            this->head->next = NULL;
+            static_cast<DoubleNode<T>*>(this->head)->prev = pt2;
+            do {
+                pt2->prev = static_cast<DoubleNode<T>*>(pt2->next);
+                pt2->next = pt1;
+                pt1 = pt2;
+                pt2 = pt2->prev;
+            } while(pt2 != NULL);
+
+            pt1 = static_cast<DoubleNode<T>*>(this->head);
+            this->head = this->tail;
+            this->tail = pt1;
+
+        }
 };
 
 #endif

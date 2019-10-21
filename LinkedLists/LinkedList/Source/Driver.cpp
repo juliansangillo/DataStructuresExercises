@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
 
-    LinkedList<int> list;
-    //DoublyLinkedList<int> list;
+    //LinkedList<int> list;
+    DoublyLinkedList<int> list;
 
     list.append(10);
     list.append(15);
@@ -33,19 +33,22 @@ int main() {
 
         cout << endl;
 
+        DoubleNode<int>* current2 = static_cast<DoubleNode<int>*>(list.tail);
+        while(current2 != NULL) {
+            cout << current2->getVal() << endl;
+            current2 = current2->prev;
+        }
+        cout << endl;
+
+        cout << "Index 3 = " << list.find(3) << endl << endl;
+
+        cout << "Head = " << list.head->getVal() << endl;
+        cout << "Tail = " << list.tail->getVal() << endl;
+
+        cout << endl;
+
         list.reverse();
     }
-
-    /* DoubleNode<int>* current2 = static_cast<DoubleNode<int>*>(list.tail);
-    while(current2 != NULL) {
-        cout << current2->getVal() << endl;
-        current2 = current2->prev;
-    }
-    cout << endl;
-
-    cout << "Index 3 = " << list.find(3) << endl;
-
-    cout << endl; */
 
     return 0;
 }
