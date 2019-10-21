@@ -172,6 +172,32 @@ class LinkedList {
             this->length--;
 
         }
+
+        void reverse() {
+
+            if(this->length == 0 || this->length == 1)
+                return;
+
+            Node<T>* pt1;
+            Node<T>* pt2;
+            Node<T>* pt3;
+
+            pt1 = head;
+            pt2 = head->next;
+            
+            head->next = NULL;
+            do {
+                pt3 = pt2->next;
+                pt2->next = pt1;
+                pt1 = pt2;
+                pt2 = pt3;
+            } while(pt3 != NULL);
+
+            pt1 = head;
+            head = tail;
+            tail = pt1;
+
+        }
 };
 
 template<class T>
