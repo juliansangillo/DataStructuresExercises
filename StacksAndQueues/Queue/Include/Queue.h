@@ -104,6 +104,15 @@ class Queue {
             return data;
         }
 
+        T peek() {
+
+            if(isEmpty()) {
+                //throw null_peek_exception
+            }
+
+            return this->front->getData();
+        }
+
         void testPrint() {
 
             Node<T>* node = this->front;
