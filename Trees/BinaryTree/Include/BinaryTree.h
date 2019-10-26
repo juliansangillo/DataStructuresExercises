@@ -62,6 +62,78 @@ class BinaryTree {
             }
 
         }
+
+        void insert(T data) {
+
+            if(root == NULL) {
+                root = new Node<T>(data);
+                return;
+            }
+
+            Node<T>* current = root;
+
+            while(true) {
+                if(data < current->get()) {
+                    if(current->left == NULL) {
+                        current->left = new Node<T>(data);
+                        return;
+                    }
+
+                    current = current->left;
+                }
+                else if(data > current->get()) {
+                    if(current->right == NULL) {
+                        current->right = new Node<T>(data);
+                        return;
+                    }
+
+                    current = current->right;
+                }
+                else {
+                    //throw duplicate_node_exception();
+                    return;
+                }
+            }
+
+        }
+
+        void print() {
+
+            std::cout << "Root: ";
+            if(root == NULL) {
+                std::cout << "NULL" << std::endl;
+                return;
+            }
+
+            printTree(root, 1);
+
+        }
+
+        void printTree(Node<T>* root, int level) {
+
+            std::cout << root->get() << " {" << std::endl;
+            
+            for(int i = 0; i < level; i++)
+                std::cout << "\t";
+            std::cout << "Left: ";
+            if(root->left == NULL)
+                std::cout << "NULL" << std::endl;
+            else
+                printTree(root->left, level+1);
+
+            for(int i = 0; i < level; i++)
+                std::cout << "\t";
+            std::cout << "Right: ";
+            if(root->right == NULL)
+                std::cout << "NULL" << std::endl;
+            else
+                printTree(root->right, level+1);
+
+            for(int i = 0; i < level - 1; i++)
+                std::cout << "\t";
+            std::cout << "}" << std::endl;
+
+        }
 };
 
 #endif
