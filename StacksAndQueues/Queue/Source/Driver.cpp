@@ -51,6 +51,9 @@ int main() {
     cout << "Peek: " << queue.peek() << endl;
     cout << "Dequeued: " << queue.dequeue() << endl;
     cout << "Peek: " << queue.peek() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
+    queue.enqueue(60);
+    cout << "Peek: " << queue.peek() << endl;
     // cout << "Dequeued: " << queue.dequeue() << endl;
     // cout << "Dequeued: " << queue.dequeue() << endl;
     // cout << "Peek: " << queue.peek() << endl;

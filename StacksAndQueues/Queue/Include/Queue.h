@@ -93,6 +93,8 @@ class Queue {
             Node<T>* node = this->front;
 
             this->front = this->front->getNext();
+            if(this->front == NULL)
+                this->back = NULL;
             node->setNext(NULL);
 
             T data = node->getData();
