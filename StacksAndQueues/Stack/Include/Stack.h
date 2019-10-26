@@ -1,6 +1,8 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
+#include "Exception.h"
+
 template<class T>
 class Stack {
     private:
@@ -11,56 +13,65 @@ class Stack {
     public:
         Stack() {
 
-            buffer = 5;
+            this->buffer = 5;
 
-            stack = new T[buffer];
-            top = NULL;
+            this->stack = new T[this->buffer];
+            this->top = NULL;
 
         }
 
         ~Stack() {
 
-            delete[] stack;
-            stack = NULL;
-            top = NULL;
+            delete[] this->stack;
+            this->stack = NULL;
+            this->top = NULL;
 
+        }
+
+        bool isEmpty() {
+
+            if(this->top == NULL)
+                return true;
+            else
+                return false;
         }
 
         void push(T data) {
 
-            if(top == NULL) {
-                top = stack;
+            if(isEmpty()) {
+                this->top = this->stack;
             }
             else {
-                top++;
+                this->top++;
             }
 
-            *top = data;
+            if(top >= stack + buffer)
+                throw stack_overflow_exception();
+
+            *this->top = data;
 
         }
 
         T pop() {
 
-            T data = *top;
-            top--;
+            if(isEmpty())
+                throw stack_underflow_exception();
+
+            T data = *this->top;
+            this->top--;
+
+            if(this->top < this-> stack)
+                this->top = NULL;
 
             return data;
         }
 
         T peek() {
 
-            return *top;
-        }
+            if(isEmpty())
+                throw null_peek_exception();
 
-        void testPrint() {
-
-            if(top == NULL)
-                return;
-
-            for(int* i = stack; i <= top; i++)
-                std::cout << *i << std::endl;
-            std::cout << std::endl;
-
+            return *this->top;
         }
 };
 
