@@ -14,7 +14,7 @@ class Stack {
             buffer = 5;
 
             stack = new T[buffer];
-            top = stack[0];
+            top = NULL;
 
         }
 
@@ -23,6 +23,27 @@ class Stack {
             delete[] stack;
             stack = NULL;
             top = NULL;
+
+        }
+
+        void push(T data) {
+
+            if(top == NULL) {
+                top = stack;
+            }
+            else {
+                top++;
+            }
+
+            *top = data;
+
+        }
+
+        void testPrint() {
+
+            for(int i = 0; i < buffer; i++)
+                std::cout << stack[i] << std::endl;
+            std::cout << std::endl;
 
         }
 };
