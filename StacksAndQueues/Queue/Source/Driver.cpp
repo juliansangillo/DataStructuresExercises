@@ -14,5 +14,11 @@ int main() {
     queue.enqueue(20);
     queue.enqueue(25);
 
+    cout << "Dequeued: " << queue.dequeue() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
+
+    queue.testPrint();
+
     return 0;
 }

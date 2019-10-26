@@ -32,6 +32,11 @@ class Node {
 
             return this->data;
         }
+
+        Node<T>* getNext() {
+
+            return this->next;
+        }
 };
 
 template<class T>
@@ -77,6 +82,36 @@ class Queue {
             this->back->setNext(node);
             this->back = node;
             std::cout << "Enqueued: " << this->back->getData() << std::endl;
+
+        }
+
+        T dequeue() {
+
+            if(isEmpty()) {
+                //throw empty_queue_exception
+            }
+
+            Node<T>* node = this->front;
+
+            this->front = this->front->getNext();
+            node->setNext(NULL);
+
+            T data = node->getData();
+            
+            delete node;
+            node = NULL;
+
+            return data;
+        }
+
+        void testPrint() {
+
+            Node<T>* node = this->front;
+
+            while(node != NULL) {
+                std::cout << node->getData() << std::endl;
+                node = node->getNext();
+            }
 
         }
 };
