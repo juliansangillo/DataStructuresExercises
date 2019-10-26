@@ -77,13 +77,11 @@ class Queue {
             if(isEmpty()) {
                 this->front = node;
                 this->back = this->front;
-                std::cout << "Enqueued: " << this->back->getData() << std::endl;
                 return;
             }
 
             this->back->setNext(node);
             this->back = node;
-            std::cout << "Enqueued: " << this->back->getData() << std::endl;
 
         }
 
@@ -111,17 +109,6 @@ class Queue {
                 throw null_peek_exception();
 
             return this->front->getData();
-        }
-
-        void testPrint() {
-
-            Node<T>* node = this->front;
-
-            while(node != NULL) {
-                std::cout << node->getData() << std::endl;
-                node = node->getNext();
-            }
-
         }
 };
 
