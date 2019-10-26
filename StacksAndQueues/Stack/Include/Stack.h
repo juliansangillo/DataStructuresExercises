@@ -39,10 +39,21 @@ class Stack {
 
         }
 
+        T pop() {
+
+            T data = *top;
+            top--;
+
+            return data;
+        }
+
         void testPrint() {
 
-            for(int i = 0; i < buffer; i++)
-                std::cout << stack[i] << std::endl;
+            if(top == NULL)
+                return;
+
+            for(int* i = stack; i <= top; i++)
+                std::cout << *i << std::endl;
             std::cout << std::endl;
 
         }
