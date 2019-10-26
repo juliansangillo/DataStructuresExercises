@@ -47,6 +47,11 @@ class Stack {
             return data;
         }
 
+        T peek() {
+
+            return *top;
+        }
+
         void testPrint() {
 
             if(top == NULL)

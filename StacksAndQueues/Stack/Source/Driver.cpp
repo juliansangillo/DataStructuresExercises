@@ -26,5 +26,8 @@ int main() {
     cout << "Pop: " << stack.pop() << endl << endl;
     stack.testPrint();
 
+    cout << "Peek: " << stack.peek() << endl << endl;
+    stack.testPrint();
+
     return 0;
 }
