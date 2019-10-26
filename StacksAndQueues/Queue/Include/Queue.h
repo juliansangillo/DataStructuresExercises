@@ -1,6 +1,8 @@
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
+#include "Exception.h"
+
 template<class T>
 class Node {
     private:
@@ -87,9 +89,8 @@ class Queue {
 
         T dequeue() {
 
-            if(isEmpty()) {
-                //throw empty_queue_exception
-            }
+            if(isEmpty())
+                throw empty_queue_exception();
 
             Node<T>* node = this->front;
 
@@ -106,9 +107,8 @@ class Queue {
 
         T peek() {
 
-            if(isEmpty()) {
-                //throw null_peek_exception
-            }
+            if(isEmpty())
+                throw null_peek_exception();
 
             return this->front->getData();
         }

@@ -17,6 +17,9 @@ int main() {
     cout << "Dequeued: " << queue.dequeue() << endl;
     cout << "Dequeued: " << queue.dequeue() << endl;
     cout << "Dequeued: " << queue.dequeue() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
+    cout << "Dequeued: " << queue.dequeue() << endl;
 
     cout << "Peek: " << queue.peek() << endl;
 
