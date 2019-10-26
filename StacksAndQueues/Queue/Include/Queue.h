@@ -16,7 +16,15 @@ class Node {
 
         ~Node() {
 
+            if(this->next != NULL)
+                delete this->next;
             this->next = NULL;
+
+        }
+
+        void setNext(Node<T>* next) {
+
+            this->next = next;
 
         }
 
@@ -29,17 +37,46 @@ class Node {
 template<class T>
 class Queue {
     private:
-        T* front;
+        Node<T>* front;
+        Node<T>* back;
     public:
         Queue() {
 
             this->front = NULL;
+            this->back = NULL;
 
         }
 
         ~Queue() {
 
+            delete this->front;
             this->front = NULL;
+            this->back = NULL;
+
+        }
+
+        bool isEmpty() {
+
+            if(this->front == NULL)
+                return true;
+            else
+                return false;
+        }
+
+        void enqueue(T data) {
+
+            Node<T>* node = new Node<T>(data);
+
+            if(isEmpty()) {
+                this->front = node;
+                this->back = this->front;
+                std::cout << "Enqueued: " << this->back->getData() << std::endl;
+                return;
+            }
+
+            this->back->setNext(node);
+            this->back = node;
+            std::cout << "Enqueued: " << this->back->getData() << std::endl;
 
         }
 };
