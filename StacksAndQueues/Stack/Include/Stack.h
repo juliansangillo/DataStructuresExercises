@@ -13,7 +13,7 @@ class Stack {
     public:
         Stack() {
 
-            this->buffer = 5;
+            this->buffer = 10000;
 
             this->stack = new T[this->buffer];
             this->top = NULL;
