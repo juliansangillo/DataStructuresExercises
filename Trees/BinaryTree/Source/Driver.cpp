@@ -17,6 +17,21 @@ int main() {
     tree.insert(9);
 
     tree.print();
+    cout << endl;
+
+    Node<int>* node1 = tree.lookup(105);
+    tree.printTree(node1, 1);
+    cout << endl;
+
+    Node<int>* node2 = tree.lookup(37);
+    tree.printTree(node2, 1);
+    cout << endl;
+
+    Node<int>* node3 = tree.lookup(35);
+    if(node3 != NULL)
+        tree.printTree(node3, 1);
+    else
+        cout << "NULL" << endl;
 
     return 0;
 }

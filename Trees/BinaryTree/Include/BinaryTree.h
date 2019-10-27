@@ -97,6 +97,24 @@ class BinaryTree {
 
         }
 
+        Node<T>* lookup(T data) {
+
+            Node<T>* current = root;
+
+            while(true) {
+                if(current == NULL)
+                    return NULL;
+
+                if(data < current->get())
+                    current = current->left;
+                else if(data > current->get())
+                    current = current->right;
+                else
+                    return current;
+            }
+
+        }
+
         void print() {
 
             std::cout << "Root: ";
