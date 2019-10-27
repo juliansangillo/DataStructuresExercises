@@ -97,23 +97,20 @@ class BinaryTree {
 
             Node<T>* current = root;
 
-            while(true) {
-                if(current == NULL)
-                    return NULL;
-
+            while(current != NULL)
                 if(data < current->get())
                     current = current->left;
                 else if(data > current->get())
                     current = current->right;
                 else
                     return current;
-            }
-
+                    
+            return NULL;
         }
 
         void remove(T data) {
 
-            
+
 
         }
 
