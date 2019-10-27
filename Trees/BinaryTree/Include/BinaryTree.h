@@ -81,17 +81,13 @@ class BinaryTree {
 
                     current = current->left;
                 }
-                else if(data > current->get()) {
+                else if(data >= current->get()) {
                     if(current->right == NULL) {
                         current->right = new Node<T>(data);
                         return;
                     }
 
                     current = current->right;
-                }
-                else {
-                    //throw duplicate_node_exception();
-                    return;
                 }
             }
 
@@ -112,6 +108,12 @@ class BinaryTree {
                 else
                     return current;
             }
+
+        }
+
+        void remove(T data) {
+
+            
 
         }
 
