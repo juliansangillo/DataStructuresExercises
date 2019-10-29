@@ -46,7 +46,7 @@ class Node {
 template<class T>
 class BinaryTree {
     private:
-        Node<T>* lookupWithParent(T data, Node<T>* parent) {
+        Node<T>* lookupWithParent(T data, Node<T>*& parent) {
 
             Node<T>* current = root;
             parent = NULL;
@@ -66,7 +66,7 @@ class BinaryTree {
             return NULL;
         }
 
-        Node<T>* successorOf(Node<T>* node, Node<T>* parent) {
+        Node<T>* successorOf(Node<T>* node, Node<T>*& parent) {
 
             parent = node;
             Node<T>* current = node->right;
@@ -80,10 +80,19 @@ class BinaryTree {
         }
 
         //WAYS TO DELETENODE()
-        //Given just the target and parent; delete the leaf node and null parent pointer
+        //Given just the target and parent; delete the leaf node and nullify parent pointer
         void deleteNode(Node<T>* target, Node<T>* targetParent) {
 
-            
+            if(targetParent != NULL)
+                if(targetParent->left == target)
+                    targetParent->left = NULL;
+                else
+                    targetParent->right = NULL;
+            else
+                root = NULL;
+
+            delete target;
+            target = NULL;
 
         }
 
@@ -161,12 +170,10 @@ class BinaryTree {
                 //throw node_not_found_exception
             }
 
-            if(data == root->get()) {
-                
-                return;
-            }
+            Node<T>* targetParent;
+            Node<T>* target = lookupWithParent(data, targetParent);
 
-            
+            deleteNode(target, targetParent);
 
         }
 
