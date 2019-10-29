@@ -97,6 +97,26 @@ class BinaryTree {
         }
 
         //Given the target, parent, and one child; bypass the target and delete it
+        void deleteNode(Node<T>* target, Node<T>* targetParent, Node<T>* child) {
+
+            if(targetParent != NULL)
+                if(targetParent->left == target)
+                    targetParent->left = child;
+                else
+                    targetParent->right = child;
+            else
+                root = child;
+
+            if(target->left == child)
+                target->left = NULL;
+            else
+                target->right = NULL;
+
+            delete target;
+            target = NULL;
+
+        }
+
         //Given the target, parent, two children, a successor, and its parent; switch pointers from target to successor, replacing it, and delete target
     public:
         Node<T>* root;
@@ -173,7 +193,12 @@ class BinaryTree {
             Node<T>* targetParent;
             Node<T>* target = lookupWithParent(data, targetParent);
 
-            deleteNode(target, targetParent);
+            if(target->left == NULL && target->right == NULL)
+                deleteNode(target, targetParent);
+            else if(target->left != NULL)
+                deleteNode(target, targetParent, target->left);
+            else if(target->right != NULL)
+                deleteNode(target, targetParent, target->right);
 
         }
 

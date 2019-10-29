@@ -49,5 +49,14 @@ int main() {
     tree.remove(101);
     tree.print(); */
 
+    tree.remove(105);
+    tree.print();
+
+    tree.insert(3);
+    tree.print();
+
+    tree.remove(9);
+    tree.print();
+
     return 0;
 }
