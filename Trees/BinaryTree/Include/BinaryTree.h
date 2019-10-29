@@ -45,6 +45,50 @@ class Node {
 
 template<class T>
 class BinaryTree {
+    private:
+        Node<T>* lookupWithParent(T data, Node<T>* parent) {
+
+            Node<T>* current = root;
+            parent = NULL;
+
+            while(current != NULL)
+                if(data < current->get()) {
+                    parent = current;
+                    current = current->left;
+                }
+                else if(data > current->get()) {
+                    parent = current;
+                    current = current->right;
+                }
+                else
+                    return current;
+                    
+            return NULL;
+        }
+
+        Node<T>* successorOf(Node<T>* node, Node<T>* parent) {
+
+            parent = node;
+            Node<T>* current = node->right;
+
+            while(current->left != NULL) {
+                parent = current;
+                current = current->left;
+            }
+
+            return current;
+        }
+
+        //WAYS TO DELETENODE()
+        //Given just the target and parent; delete the leaf node and null parent pointer
+        void deleteNode(Node<T>* target, Node<T>* targetParent) {
+
+            
+
+        }
+
+        //Given the target, parent, and one child; bypass the target and delete it
+        //Given the target, parent, two children, a successor, and its parent; switch pointers from target to successor, replacing it, and delete target
     public:
         Node<T>* root;
 
@@ -81,13 +125,16 @@ class BinaryTree {
 
                     current = current->left;
                 }
-                else if(data >= current->get()) {
+                else if(data > current->get()) {
                     if(current->right == NULL) {
                         current->right = new Node<T>(data);
                         return;
                     }
 
                     current = current->right;
+                }
+                else {
+                    //throw duplicate_value_exception();
                 }
             }
 
@@ -110,7 +157,16 @@ class BinaryTree {
 
         void remove(T data) {
 
+            if(root == NULL) {
+                //throw node_not_found_exception
+            }
 
+            if(data == root->get()) {
+                
+                return;
+            }
+
+            
 
         }
 
