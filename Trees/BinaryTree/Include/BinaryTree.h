@@ -1,6 +1,8 @@
 #ifndef __BINARYTREE_H__
 #define __BINARYTREE_H__
 
+#include "Exception.h"
+
 template<class T>
 class Node {
     private:
@@ -187,9 +189,8 @@ class BinaryTree {
 
                     current = current->right;
                 }
-                else {
-                    //throw duplicate_value_exception();
-                }
+                else
+                    throw duplicate_value_exception();
             }
 
         }
@@ -214,9 +215,8 @@ class BinaryTree {
             Node<T>* targetParent;
             Node<T>* target = this->lookupWithParent(data, targetParent);
 
-            if(target == NULL) {
-                //throw node_not_found_exception
-            }
+            if(target == NULL)
+                throw node_not_found_exception();
 
             if(target->left != NULL && target->right != NULL) {
                 Node<T>* successorParent;

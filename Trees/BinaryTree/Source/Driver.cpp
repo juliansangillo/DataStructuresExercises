@@ -74,6 +74,33 @@ int main() {
 
     tree.remove(101);
     tree.print();
+    cout << endl;
+
+    //tree.insert(50);
+    //tree.remove(43);
+    //tree.print();
+
+    tree.remove(200);
+    tree.print();
+    tree.remove(45);
+    tree.print();
+    tree.remove(50);
+    tree.print();
+    tree.remove(35);
+    tree.print();
+    tree.remove(42);
+    tree.print();
+    tree.remove(3);
+    tree.print();
+    tree.remove(144);
+    tree.print();
+    tree.remove(34);
+    tree.print();
+    tree.remove(40);
+    tree.print();
+
+    //tree.remove(1000);
+    //tree.print();
 
     return 0;
 }
