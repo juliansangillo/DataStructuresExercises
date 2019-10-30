@@ -118,6 +118,31 @@ class BinaryTree {
         }
 
         //Given the target, parent, two children, a successor, and its parent; switch pointers from target to successor, replacing it, and delete target
+        void deleteNode(Node<T>* target, Node<T>* targetParent, Node<T>* leftChild, Node<T>* rightChild, Node<T>* successor, Node<T>* successorParent) {
+
+            target->left = NULL;
+            target->right = NULL;
+
+            if(targetParent != NULL)
+                if(targetParent->left == target)
+                    targetParent->left = successor;
+                else
+                    targetParent->right = successor;
+            else
+                root = successor;
+
+            if(rightChild == successor)
+                successor->left = leftChild;
+            else {
+                successorParent->left = successor->right;
+                successor->left = leftChild;
+                successor->right = rightChild;
+            }
+            
+            delete target;
+            target = NULL;
+
+        }
     public:
         Node<T>* root;
 
@@ -186,19 +211,25 @@ class BinaryTree {
 
         void remove(T data) {
 
-            if(root == NULL) {
+            Node<T>* targetParent;
+            Node<T>* target = this->lookupWithParent(data, targetParent);
+
+            if(target == NULL) {
                 //throw node_not_found_exception
             }
 
-            Node<T>* targetParent;
-            Node<T>* target = lookupWithParent(data, targetParent);
+            if(target->left != NULL && target->right != NULL) {
+                Node<T>* successorParent;
+                Node<T>* successor = this->successorOf(target, successorParent);
 
-            if(target->left == NULL && target->right == NULL)
-                deleteNode(target, targetParent);
+                this->deleteNode(target, targetParent, target->left, target->right, successor, successorParent);
+            }
             else if(target->left != NULL)
-                deleteNode(target, targetParent, target->left);
+                this->deleteNode(target, targetParent, target->left);
             else if(target->right != NULL)
-                deleteNode(target, targetParent, target->right);
+                this->deleteNode(target, targetParent, target->right);
+            else
+                this->deleteNode(target, targetParent);
 
         }
 

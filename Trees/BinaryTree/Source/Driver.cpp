@@ -13,7 +13,7 @@ int main() {
     tree.insert(144);
     tree.insert(104);
     tree.insert(33);
-    tree.insert(37);
+    tree.insert(45);
     tree.insert(9);
 
     tree.print();
@@ -23,7 +23,7 @@ int main() {
     tree.printTree(node1, 1);
     cout << endl;
 
-    Node<int>* node2 = tree.lookup(37);
+    Node<int>* node2 = tree.lookup(45);
     tree.printTree(node2, 1);
     cout << endl;
 
@@ -56,6 +56,23 @@ int main() {
     tree.print();
 
     tree.remove(9);
+    tree.print();
+    cout << endl;
+
+    tree.insert(40);
+    tree.insert(50);
+    tree.insert(42);
+    tree.insert(34);
+    tree.insert(35);
+    tree.insert(200);
+    tree.print();
+    cout << endl;
+
+    tree.remove(33);
+    tree.print();
+    cout << endl;
+
+    tree.remove(101);
     tree.print();
 
     return 0;
