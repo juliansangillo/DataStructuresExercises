@@ -5,7 +5,7 @@
 
 template<class T>
 class Node {
-    private:
+    protected:
         T data;
     public:
         Node<T>* left;
@@ -47,7 +47,7 @@ class Node {
 
 template<class T>
 class BinaryTree {
-    private:
+    protected:
         Node<T>* lookupWithParent(T data, Node<T>*& parent) {
 
             Node<T>* current = root;
