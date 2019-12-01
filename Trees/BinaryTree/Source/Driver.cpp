@@ -1,106 +1,96 @@
 #include <iostream>
 
-#include "BinaryTree.h"
+#include "AVLTree.h"
 
 using namespace std;
 
 int main() {
 
-    BinaryTree<int> tree;
+    AVLTree<int> tree;
 
-    tree.insert(101);
-    tree.insert(105);
-    tree.insert(144);
-    tree.insert(104);
-    tree.insert(33);
-    tree.insert(45);
-    tree.insert(9);
-
+    tree.insert(18);
     tree.print();
-    cout << endl;
-
-    Node<int>* node1 = tree.lookup(105);
-    tree.printTree(node1, 1);
-    cout << endl;
-
-    Node<int>* node2 = tree.lookup(45);
-    tree.printTree(node2, 1);
-    cout << endl;
-
-    Node<int>* node3 = tree.lookup(35);
-    if(node3 != NULL)
-        tree.printTree(node3, 1);
-    else
-        cout << "NULL" << endl;
     cout << endl;
     
-    tree.remove(104);
-    tree.print();
-    cout << endl;
-
-    /*tree.remove(144);
-    tree.remove(37);
-    tree.remove(9);
-    tree.remove(33);
-    tree.remove(105);
-    tree.print();
-    cout << endl;
-
-    tree.remove(101);
-    tree.print(); */
-
-    tree.remove(105);
-    tree.print();
-
     tree.insert(3);
     tree.print();
+    cout << endl;
 
-    tree.remove(9);
+    tree.insert(37);
+    tree.print();
+    cout << endl;
+
+    tree.insert(2);
+    tree.print();
+    cout << endl;
+
+    tree.insert(11);
+    tree.print();
+    cout << endl;
+
+    tree.insert(25);
     tree.print();
     cout << endl;
 
     tree.insert(40);
-    tree.insert(50);
+    tree.print();
+    cout << endl;
+
+    tree.insert(1);
+    tree.print();
+    cout << endl;
+
+    tree.insert(8);
+    tree.print();
+    cout << endl;
+
+    tree.insert(13);
+    tree.print();
+    cout << endl;
+
     tree.insert(42);
-    tree.insert(34);
-    tree.insert(35);
-    tree.insert(200);
     tree.print();
     cout << endl;
 
-    tree.remove(33);
+    tree.insert(6);
     tree.print();
     cout << endl;
 
-    tree.remove(101);
+    tree.insert(10);
     tree.print();
     cout << endl;
 
-    //tree.insert(50);
-    //tree.remove(43);
-    //tree.print();
+    tree.insert(15);
+    tree.print();
+    cout << endl;
 
-    tree.remove(200);
+    tree.insert(45);
     tree.print();
-    tree.remove(45);
-    tree.print();
-    tree.remove(50);
-    tree.print();
-    tree.remove(35);
-    tree.print();
-    tree.remove(42);
-    tree.print();
-    tree.remove(3);
-    tree.print();
-    tree.remove(144);
-    tree.print();
-    tree.remove(34);
-    tree.print();
-    tree.remove(40);
-    tree.print();
+    cout << endl;
 
-    //tree.remove(1000);
-    //tree.print();
+    tree.insert(-5);
+    tree.print();
+    cout << endl;
+
+    tree.insert(5);
+    tree.print();
+    cout << endl;
+
+    tree.insert(20);
+    tree.print();
+    cout << endl;
+
+    tree.insert(23);
+    tree.print();
+    cout << endl;
+
+    tree.insert(7);
+    tree.print();
+    cout << endl;
+
+    tree.insert(4);
+    tree.print();
+    cout << endl;
 
     return 0;
 }
