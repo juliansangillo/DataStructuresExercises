@@ -99,19 +99,19 @@ class AVLTree : public BinaryTree<T> {
             AVLNode<T>* child;
             AVLNode<T>* newTree = subTree;
             if(balanceFactor < -1) {
-                child = (AVLNode<T>*)subTree->left;
+                balanceFactor = calculateBalance((AVLNode<T>*)subTree->left);
                 
-                if(data < child->get())
-                    newTree = rotateRight(subTree);
-                else if(data > child->get())
+                if(balanceFactor > 0)
                     newTree = rotateLeftRight(subTree);
+                else
+                    newTree = rotateRight(subTree);
             }
             else if(balanceFactor > 1) {
-                child = (AVLNode<T>*)subTree->right;
+                balanceFactor = calculateBalance((AVLNode<T>*)subTree->right);
                 
-                if(data < child->get())
+                if(balanceFactor < 0)
                     newTree = rotateRightLeft(subTree);
-                else if(data > child->get())
+                else
                     newTree = rotateLeft(subTree);
             }
 
