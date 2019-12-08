@@ -6,7 +6,7 @@
 template<class T>
 class AVLNode : public Node<T> {
     private:
-        T height;
+        int height;
     public:
         AVLNode(T data) : Node<T>(data) {
 
@@ -21,16 +21,16 @@ class AVLNode : public Node<T> {
             this->height++;
 
         }
-
-        void decrementHeightBy(T amount) {
-
-            this->height -= amount;
-
-        }
         
-        T getHeight() {
+        int getHeight() {
 
             return this->height;
+        }
+
+        void setHeight(int height) {
+
+            this->height = height;
+
         }
 };
 
@@ -48,51 +48,68 @@ class AVLTree : public BinaryTree<T> {
             return 0;
         }
 
-        AVLNode<T>* rotateLeft(AVLNode<T>* currentRoot, T decAmount = 2) {
+        void evaluateAndCorrectHeight(AVLNode<T>* node) {
+
+            int greatestChildHeight;
+            if(node->left != NULL && node->right != NULL)
+                if(((AVLNode<T>*)node->left)->getHeight() > ((AVLNode<T>*)node->right)->getHeight())
+                    greatestChildHeight = ((AVLNode<T>*)node->left)->getHeight();
+                else
+                    greatestChildHeight = ((AVLNode<T>*)node->right)->getHeight();
+            else if(node->left != NULL)
+                greatestChildHeight = ((AVLNode<T>*)node->left)->getHeight();
+            else if(node->right != NULL)
+                greatestChildHeight = ((AVLNode<T>*)node->right)->getHeight();
+            else
+                greatestChildHeight = 0;
+
+            node->setHeight(greatestChildHeight + 1);
+
+        }
+
+        AVLNode<T>* rotateLeft(AVLNode<T>* currentRoot) {
 
             AVLNode<T>* newRoot = (AVLNode<T>*)currentRoot->right;
 
             currentRoot->right = newRoot->left;
             newRoot->left = currentRoot;
 
-            currentRoot->decrementHeightBy(decAmount);
+            evaluateAndCorrectHeight(currentRoot);
+            evaluateAndCorrectHeight(newRoot);
 
             return newRoot;
         }
 
-        AVLNode<T>* rotateRight(AVLNode<T>* currentRoot, T decAmount = 2) {
+        AVLNode<T>* rotateRight(AVLNode<T>* currentRoot) {
 
             AVLNode<T>* newRoot = (AVLNode<T>*)currentRoot->left;
 
             currentRoot->left = newRoot->right;
             newRoot->right = currentRoot;
 
-            currentRoot->decrementHeightBy(decAmount);
+            evaluateAndCorrectHeight(currentRoot);
+            evaluateAndCorrectHeight(newRoot);
 
             return newRoot;
         }
 
         AVLNode<T>* rotateLeftRight(AVLNode<T>* currentRoot) {
 
-            currentRoot->left = rotateLeft((AVLNode<T>*)currentRoot->left, 1);
+            currentRoot->left = rotateLeft((AVLNode<T>*)currentRoot->left);
             AVLNode<T>* newRoot = rotateRight(currentRoot);
-
-            newRoot->incrementHeight();
 
             return newRoot;
         }
 
         AVLNode<T>* rotateRightLeft(AVLNode<T>* currentRoot) {
 
-            currentRoot->right = rotateRight((AVLNode<T>*)currentRoot->right, 1);
+            currentRoot->right = rotateRight((AVLNode<T>*)currentRoot->right);
             AVLNode<T>* newRoot = rotateLeft(currentRoot);
-
-            newRoot->incrementHeight();
             
             return newRoot;
         }
 
-        AVLNode<T>* evaluateAndCorrectSubTree(AVLNode<T>* subTree, T data) {
+        AVLNode<T>* evaluateAndCorrectSubTree(AVLNode<T>* subTree) {
 
             int balanceFactor = calculateBalance(subTree);
 
@@ -126,7 +143,7 @@ class AVLTree : public BinaryTree<T> {
                 else {
                     insertNode((AVLNode<T>*)current->left, data);
 
-                    current->left = evaluateAndCorrectSubTree((AVLNode<T>*)current->left, data);
+                    current->left = evaluateAndCorrectSubTree((AVLNode<T>*)current->left);
                 }
 
                 if(((AVLNode<T>*)current->left)->getHeight() == current->getHeight())
@@ -138,7 +155,7 @@ class AVLTree : public BinaryTree<T> {
                 else {
                     insertNode((AVLNode<T>*)current->right, data);
 
-                    current->right = evaluateAndCorrectSubTree((AVLNode<T>*)current->right, data);
+                    current->right = evaluateAndCorrectSubTree((AVLNode<T>*)current->right);
                 }
 
                 if(((AVLNode<T>*)current->right)->getHeight() == current->getHeight())
@@ -146,6 +163,60 @@ class AVLTree : public BinaryTree<T> {
             }
             else
                 throw duplicate_value_exception();
+
+        }
+
+        void deleteFoundTarget(AVLNode<T>* target, AVLNode<T>* targetParent) {
+
+            if(target->left != NULL && target->right != NULL) {
+                Node<T>* successorParent;
+                Node<T>* successor = this->successorOf(target, successorParent);
+
+                int height = target->getHeight();
+
+                this->deleteNode(target, targetParent, target->left, target->right, successor, successorParent);
+                if(successor->right != NULL)
+                    successor->right = evaluateAndCorrectSubTree((AVLNode<T>*)successor->right);
+
+                ((AVLNode<T>*)successor)->setHeight(height);
+            }
+            else if(target->left != NULL)
+                this->deleteNode(target, targetParent, target->left);
+            else if(target->right != NULL)
+                this->deleteNode(target, targetParent, target->right);
+            else
+                this->deleteNode(target, targetParent);
+
+        }
+
+        void removeNode(AVLNode<T>* current, T data) {
+
+            if(data < current->get()) {
+                if(current->left == NULL)
+                    throw node_not_found_exception();
+                else if(data == current->left->get())
+                    deleteFoundTarget((AVLNode<T>*)current->left, current);
+                else
+                    removeNode((AVLNode<T>*)current->left, data);
+
+                if(current->left != NULL) {
+                    current->left = evaluateAndCorrectSubTree((AVLNode<T>*)current->left);
+                    evaluateAndCorrectHeight((AVLNode<T>*)current->left);
+                }
+            }
+            else if(data > current->get()) {
+                if(current->right == NULL)
+                    throw node_not_found_exception();
+                else if(data == current->right->get())
+                    deleteFoundTarget((AVLNode<T>*)current->right, current);
+                else
+                    removeNode((AVLNode<T>*)current->right, data);
+
+                if(current->right != NULL) {
+                    current->right = evaluateAndCorrectSubTree((AVLNode<T>*)current->right);
+                    evaluateAndCorrectHeight((AVLNode<T>*)current->right);
+                }
+            }
 
         }
     public:
@@ -162,7 +233,22 @@ class AVLTree : public BinaryTree<T> {
 
             this->insertNode((AVLNode<T>*)this->root, data);
             
-            this->root = this->evaluateAndCorrectSubTree((AVLNode<T>*)this->root, data);
+            this->root = this->evaluateAndCorrectSubTree((AVLNode<T>*)this->root);
+
+        }
+        
+        void remove(T data) {
+
+            if(this->root == NULL)
+                throw node_not_found_exception();
+
+            if(data == this->root->get())
+                this->deleteFoundTarget((AVLNode<T>*)this->root, NULL);
+            else
+                this->removeNode((AVLNode<T>*)this->root, data);
+
+            this->root = this->evaluateAndCorrectSubTree((AVLNode<T>*)this->root);
+            evaluateAndCorrectHeight((AVLNode<T>*)this->root);
 
         }
 

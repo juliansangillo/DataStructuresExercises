@@ -92,5 +92,53 @@ int main() {
     tree.print();
     cout << endl;
 
+    tree.remove(40);
+    tree.print();
+    cout << endl;
+
+    tree.remove(23);
+    tree.print();
+    cout << endl;
+
+    tree.remove(5);
+    tree.print();
+    cout << endl;
+
+    tree.remove(37);
+    tree.print();
+    cout << endl;
+
+    tree.remove(42);
+    tree.print();
+    cout << endl;
+
+    tree.remove(11);
+    tree.print();
+    cout << endl;
+
+    tree.remove(-5);
+    tree.print();
+    cout << endl;
+
+    tree.remove(1);
+    tree.print();
+    cout << endl;
+
+    tree.remove(2);
+    tree.print();
+    cout << endl;
+
+    tree.remove(8);
+    tree.print();
+    cout << endl;
+
+    tree.remove(10);
+    tree.print();
+    cout << endl;
+
+    tree.remove(13);
+    tree.print();
+    cout << endl;
+
     return 0;
 }
