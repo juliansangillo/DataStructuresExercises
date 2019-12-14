@@ -268,11 +268,11 @@ class AVLTree : public BinaryTree<T> {
 
             std::cout << root->get() << " {" << std::endl;
 
-            for(T i = 0; i < level; i++)
+            for(int i = 0; i < level; i++)
                 std::cout << "\t";
             std::cout << "Height: " << ((AVLNode<T>*)root)->getHeight() << std::endl;
             
-            for(T i = 0; i < level; i++)
+            for(int i = 0; i < level; i++)
                 std::cout << "\t";
             std::cout << "Left: ";
             if(root->left == NULL)
@@ -280,7 +280,7 @@ class AVLTree : public BinaryTree<T> {
             else
                 printTree((AVLNode<T>*)root->left, level+1);
 
-            for(T i = 0; i < level; i++)
+            for(int i = 0; i < level; i++)
                 std::cout << "\t";
             std::cout << "Right: ";
             if(root->right == NULL)
@@ -288,7 +288,7 @@ class AVLTree : public BinaryTree<T> {
             else
                 printTree((AVLNode<T>*)root->right, level+1);
 
-            for(T i = 0; i < level - 1; i++)
+            for(int i = 0; i < level - 1; i++)
                 std::cout << "\t";
             std::cout << "}" << std::endl;
 
