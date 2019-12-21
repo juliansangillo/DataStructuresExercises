@@ -57,6 +57,29 @@ class RedBlackTree : public BinaryTree<T> {
 
         }
 
+        void initiateRemoval(T data) {
+
+            Node<T>* targetParent;
+            RedBlackNode<T>* target = (RedBlackNode<T>)this->lookupWithParent(data, targetParent);
+
+            if(target == NULL)
+                throw node_not_found_exception();
+
+            if(target->left != NULL && target->right != NULL) {
+                Node<T>* successorParent;
+                Node<T>* successor = this->successorOf(target, successorParent);
+
+                this->deleteNode(target, targetParent, target->left, target->right, successor, successorParent);
+            }
+            else if(target->left != NULL)
+                this->deleteNode(target, targetParent, target->left);
+            else if(target->right != NULL)
+                this->deleteNode(target, targetParent, target->right);
+            else
+                this->deleteNode(target, targetParent);
+
+        }
+
         int isNotRedBlack(RedBlackNode<T>* tree) {
 
             if(tree->getColor() == BLACK) {
@@ -215,7 +238,19 @@ class RedBlackTree : public BinaryTree<T> {
 
         }
 
-        void remove(T data) {}
+        void remove(T data) {
+
+            //initiateRemoval(data);
+
+            evaluateSubTree((RedBlackNode<T>*)this->root);
+
+            if(int status = isNotRedBlack((RedBlackNode<T>*)this->root))
+                    this->root = correctSubTree((RedBlackNode<T>*)this->root, status);
+
+            if(static_cast<RedBlackNode<T>*>(this->root)->getColor() == RED)
+                static_cast<RedBlackNode<T>*>(this->root)->recolor();
+
+        }
 
         void print() {
 

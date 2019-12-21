@@ -92,6 +92,15 @@ int main() {
     tree.insert(10);
     tree.print();
     cout << endl;
+
+    //Redo remove
+    tree.remove(10);
+    tree.print();
+    cout << endl;
+
+    tree.remove(54); //BUG: Does not update node color
+    tree.print();
+    cout << endl;
     
     return 0;
 }
