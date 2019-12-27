@@ -59,7 +59,9 @@ int main() {
     graph.insertEdge(8, 121, true);
 
     graph.deleteEdge(121, 8, true);
-    
+    graph.deleteVertex(6);
+    graph.deleteVertex(8);
+    graph.deleteVertex(3);
 
     graph.print();
 

@@ -62,6 +62,22 @@ class Graph {
 
         }
 
+        void deleteVertex(T vert) {
+
+            if(matrix.find(vert) == matrix.end())
+                throw vertex_doesnt_exist<T>(vert);
+
+            using namespace std;
+
+            matrix.erase(vert);
+            vertexMap.erase(vert);
+
+            typename unordered_map<T, unordered_map<T, int>>::iterator x;
+            for(x = matrix.begin(); x != matrix.end(); x++)
+                (x->second).erase(vert);
+
+        }
+
         void deleteEdge(T vertX, T vertY, bool bothDirections) {
 
             if(matrix.find(vertX) == matrix.end())
