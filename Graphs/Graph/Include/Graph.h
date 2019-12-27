@@ -117,6 +117,34 @@ class Graph {
             return connections;
         }
 
+        void setWeight(T vertX, T vertY, int weight, bool bothDirections = true) {
+
+            if(matrix.find(vertX) == matrix.end())
+                throw vertex_doesnt_exist<T>(vertX);
+
+            if(matrix[vertX].find(vertY) == matrix[vertX].end())
+                throw vertex_doesnt_exist<T>(vertY);
+
+            if(matrix[vertX][vertY] == 0)
+                throw edge_doesnt_exist<T>(vertX, vertY);
+
+            if(weight < 0)
+                throw invalid_weight<T>(weight);
+
+            if(bothDirections) {
+
+                if(matrix[vertY][vertX] == 0)
+                    throw edge_doesnt_exist<T>(vertX, vertY);
+
+                matrix[vertX][vertY] = weight;
+                matrix[vertY][vertX] = weight;
+
+            }
+            else
+                matrix[vertX][vertY] = weight;
+            
+        }
+
         int getWeight(T vertX, T vertY) {
 
             if(matrix.find(vertX) == matrix.end())

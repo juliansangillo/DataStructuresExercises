@@ -21,7 +21,7 @@ int main() {
     graph.insertEdge(2, 5);
 
     graph.insertVertex(50);
-    graph.insertEdge(2, 50);
+    graph.insertEdge(2, 50, true, 15);
 
     graph.insertVertex(1);
     graph.insertEdge(50, 1);
@@ -50,18 +50,8 @@ int main() {
 
     cout << "2 --> 50 : " << graph.getWeight(2, 50) << endl << endl;
 
-    graph.insertVertex(3);
-    graph.insertEdge(2, 3);
-    graph.insertVertex(6);
-    graph.insertEdge(3, 6);
-    graph.insertVertex(8);
-    graph.insertEdge(6, 8);
-    graph.insertEdge(8, 121);
-
-    graph.deleteEdge(121, 8);
-    graph.deleteVertex(6);
-    graph.deleteVertex(8);
-    graph.deleteVertex(3);
+    graph.setWeight(5, 2, 8);
+    cout << "5 --> 2 : " << graph.getWeight(5, 2) << endl << endl;
 
     graph.print();
 

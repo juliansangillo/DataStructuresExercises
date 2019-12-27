@@ -84,4 +84,24 @@ class edge_doesnt_exist : public std::exception {
         }
 };
 
+template<class T>
+class invalid_weight : public std::exception {
+    private:
+        std::string msg;
+    public:
+        invalid_weight(int weight) {
+
+            std::stringstream stream;
+            stream << "\'" << weight << "\' is an invalid weight value. Weights of edges must be integers greater than zero";
+
+            msg = stream.str();
+
+        }
+
+        virtual const char* what() const throw() {
+
+            return msg.c_str();
+        }
+};
+
 #endif
