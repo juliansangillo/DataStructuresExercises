@@ -41,5 +41,12 @@ int main() {
 
     graph.print();
 
+    vector<array<int, 2>> conn = graph.lookupVertex(50);
+
+    cout << "Lookup 50: [";
+    for(array<int, 2> tuple : conn)
+        cout << "\t" << tuple.front();
+    cout << "\t]" << endl;
+
     return 0;
 }

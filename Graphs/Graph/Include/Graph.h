@@ -2,6 +2,7 @@
 #define __GRAPH_H__
 
 #include<unordered_map>
+#include<vector>
 
 #include "Exception.h"
 
@@ -38,27 +39,43 @@ class Graph {
 
         }
 
-        void insertEdge(T vert1, T vert2, bool bidirectional, int weight = 1) {
+        void insertEdge(T vertX, T vertY, bool bidirectional, int weight = 1) {
 
-            if(matrix.find(vert1) == matrix.end())
-                throw vertex_doesnt_exist<T>(vert1);
+            if(matrix.find(vertX) == matrix.end())
+                throw vertex_doesnt_exist<T>(vertX);
 
-            if(matrix[vert1].find(vert2) == matrix[vert1].end())
-                throw vertex_doesnt_exist<T>(vert2);
+            if(matrix[vertX].find(vertY) == matrix[vertX].end())
+                throw vertex_doesnt_exist<T>(vertY);
 
-            if(matrix[vert1][vert2] >= 1)
-                throw edge_already_exists<T>(vert1, vert2);
+            if(matrix[vertX][vertY] >= 1)
+                throw edge_already_exists<T>(vertX, vertY);
 
             if(bidirectional) {
-                if(matrix[vert2][vert1] >= 1)
-                    throw edge_already_exists<T>(vert2, vert1);
+                if(matrix[vertY][vertX] >= 1)
+                    throw edge_already_exists<T>(vertY, vertX);
 
-                matrix[vert1][vert2] = weight;
-                matrix[vert2][vert1] = weight;
+                matrix[vertX][vertY] = weight;
+                matrix[vertY][vertX] = weight;
             }
             else
-                matrix[vert1][vert2] = weight;
+                matrix[vertX][vertY] = weight;
 
+        }
+
+        std::vector<std::array<T, 2>> lookupVertex(T vert) {
+
+            if(matrix.find(vert) == matrix.end())
+                throw vertex_doesnt_exist<T>(vert);
+
+            std::vector<std::array<T, 2>> connections;
+            std::unordered_map<T, int> map = matrix[vert];
+
+            typename std::unordered_map<T, int>::iterator y;
+            for(y = map.begin(); y != map.end(); y++)
+                if(y->second >= 1)
+                    connections.push_back(std::array<T, 2> {y->first, y->second});
+                    
+            return connections;
         }
 
         void print() {
