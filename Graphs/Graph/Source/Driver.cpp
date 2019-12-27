@@ -46,7 +46,22 @@ int main() {
     cout << "Lookup 50: [";
     for(array<int, 2> tuple : conn)
         cout << "\t" << tuple.front();
-    cout << "\t]" << endl;
+    cout << "\t]" << endl << endl;
+
+    cout << "2 --> 50 : " << graph.getWeight(2, 50) << endl << endl;
+
+    graph.insertVertex(3);
+    graph.insertEdge(2, 3, true);
+    graph.insertVertex(6);
+    graph.insertEdge(3, 6, true);
+    graph.insertVertex(8);
+    graph.insertEdge(6, 8, true);
+    graph.insertEdge(8, 121, true);
+
+    graph.deleteEdge(121, 8, true);
+    
+
+    graph.print();
 
     return 0;
 }

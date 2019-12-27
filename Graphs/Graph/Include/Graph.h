@@ -62,6 +62,29 @@ class Graph {
 
         }
 
+        void deleteEdge(T vertX, T vertY, bool bothDirections) {
+
+            if(matrix.find(vertX) == matrix.end())
+                throw vertex_doesnt_exist<T>(vertX);
+
+            if(matrix[vertX].find(vertY) == matrix[vertX].end())
+                throw vertex_doesnt_exist<T>(vertY);
+
+            if(matrix[vertX][vertY] == 0)
+                throw edge_doesnt_exist<T>(vertX, vertY);
+
+            if(bothDirections) {
+                if(matrix[vertY][vertX] == 0)
+                    throw edge_doesnt_exist<T>(vertY, vertX);
+
+                matrix[vertX][vertY] = 0;
+                matrix[vertY][vertX] = 0;
+            }
+            else
+                matrix[vertX][vertY] = 0;
+
+        }
+
         std::vector<std::array<T, 2>> lookupVertex(T vert) {
 
             if(matrix.find(vert) == matrix.end())
