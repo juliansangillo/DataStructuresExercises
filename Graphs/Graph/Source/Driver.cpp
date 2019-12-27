@@ -53,6 +53,9 @@ int main() {
     graph.setWeight(5, 2, 8);
     cout << "5 --> 2 : " << graph.getWeight(5, 2) << endl << endl;
 
+    graph.removeWeight(2, 50);
+    graph.removeWeight(5, 2);
+
     graph.print();
 
     return 0;

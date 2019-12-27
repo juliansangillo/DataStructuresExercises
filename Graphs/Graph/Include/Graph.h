@@ -134,7 +134,7 @@ class Graph {
             if(bothDirections) {
 
                 if(matrix[vertY][vertX] == 0)
-                    throw edge_doesnt_exist<T>(vertX, vertY);
+                    throw edge_doesnt_exist<T>(vertY, vertX);
 
                 matrix[vertX][vertY] = weight;
                 matrix[vertY][vertX] = weight;
@@ -142,6 +142,31 @@ class Graph {
             }
             else
                 matrix[vertX][vertY] = weight;
+            
+        }
+
+        void removeWeight(T vertX, T vertY, bool bothDirections = true) {
+
+            if(matrix.find(vertX) == matrix.end())
+                throw vertex_doesnt_exist<T>(vertX);
+
+            if(matrix[vertX].find(vertY) == matrix[vertX].end())
+                throw vertex_doesnt_exist<T>(vertY);
+
+            if(matrix[vertX][vertY] == 0)
+                throw edge_doesnt_exist<T>(vertX, vertY);
+
+            if(bothDirections) {
+
+                if(matrix[vertY][vertX] == 0)
+                    throw edge_doesnt_exist<T>(vertY, vertX);
+
+                matrix[vertX][vertY] = 1;
+                matrix[vertY][vertX] = 1;
+
+            }
+            else
+                matrix[vertX][vertY] = 1;
             
         }
 
