@@ -78,6 +78,20 @@ class Graph {
             return connections;
         }
 
+        int getWeight(T vertX, T vertY) {
+
+            if(matrix.find(vertX) == matrix.end())
+                throw vertex_doesnt_exist<T>(vertX);
+
+            if(matrix[vertX].find(vertY) == matrix[vertX].end())
+                throw vertex_doesnt_exist<T>(vertY);
+
+            if(matrix[vertX][vertY] == 0)
+                throw edge_doesnt_exist<T>(vertX, vertY);
+
+            return matrix[vertX][vertY];
+        }
+
         void print() {
             
             using namespace std;

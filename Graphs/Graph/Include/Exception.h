@@ -64,4 +64,24 @@ class edge_already_exists : public std::exception {
         }
 };
 
+template<class T>
+class edge_doesnt_exist : public std::exception {
+    private:
+        std::string msg;
+    public:
+        edge_doesnt_exist(T vert1, T vert2) {
+
+            std::stringstream stream;
+            stream << "The edge \'" << vert1 << " --> " << vert2 << "\' doesn't exist in this graph";
+
+            msg = stream.str();
+
+        }
+
+        virtual const char* what() const throw() {
+
+            return msg.c_str();
+        }
+};
+
 #endif
