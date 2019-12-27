@@ -14,30 +14,30 @@ int main() {
     graph.insertVertex(2);
     graph.insertVertex(100);
 
-    graph.insertEdge(5, 0, true);
-    graph.insertEdge(5, 18, true);
-    graph.insertEdge(18, 100, true);
-    graph.insertEdge(100, 2, true);
-    graph.insertEdge(2, 5, true);
+    graph.insertEdge(5, 0);
+    graph.insertEdge(5, 18);
+    graph.insertEdge(18, 100);
+    graph.insertEdge(100, 2);
+    graph.insertEdge(2, 5);
 
     graph.insertVertex(50);
-    graph.insertEdge(2, 50, true);
+    graph.insertEdge(2, 50);
 
     graph.insertVertex(1);
-    graph.insertEdge(50, 1, true);
+    graph.insertEdge(50, 1);
 
     graph.insertVertex(121);
-    graph.insertEdge(50, 121, true);
+    graph.insertEdge(50, 121);
 
     graph.insertVertex(69);
-    graph.insertEdge(1, 69, true);
-    graph.insertEdge(50, 69, true);
-    graph.insertEdge(121, 69, true);
+    graph.insertEdge(1, 69);
+    graph.insertEdge(50, 69);
+    graph.insertEdge(121, 69);
 
     graph.insertVertex(999);
-    graph.insertEdge(69, 999, true);
-    graph.insertEdge(121, 999, true);
-    graph.insertEdge(100, 999, true);
+    graph.insertEdge(69, 999);
+    graph.insertEdge(121, 999);
+    graph.insertEdge(100, 999);
 
     graph.print();
 
@@ -51,14 +51,14 @@ int main() {
     cout << "2 --> 50 : " << graph.getWeight(2, 50) << endl << endl;
 
     graph.insertVertex(3);
-    graph.insertEdge(2, 3, true);
+    graph.insertEdge(2, 3);
     graph.insertVertex(6);
-    graph.insertEdge(3, 6, true);
+    graph.insertEdge(3, 6);
     graph.insertVertex(8);
-    graph.insertEdge(6, 8, true);
-    graph.insertEdge(8, 121, true);
+    graph.insertEdge(6, 8);
+    graph.insertEdge(8, 121);
 
-    graph.deleteEdge(121, 8, true);
+    graph.deleteEdge(121, 8);
     graph.deleteVertex(6);
     graph.deleteVertex(8);
     graph.deleteVertex(3);

@@ -39,7 +39,7 @@ class Graph {
 
         }
 
-        void insertEdge(T vertX, T vertY, bool bidirectional, int weight = 1) {
+        void insertEdge(T vertX, T vertY, bool bidirectional = true, int weight = 1) {
 
             if(matrix.find(vertX) == matrix.end())
                 throw vertex_doesnt_exist<T>(vertX);
@@ -78,7 +78,7 @@ class Graph {
 
         }
 
-        void deleteEdge(T vertX, T vertY, bool bothDirections) {
+        void deleteEdge(T vertX, T vertY, bool bothDirections = true) {
 
             if(matrix.find(vertX) == matrix.end())
                 throw vertex_doesnt_exist<T>(vertX);
