@@ -16,12 +16,14 @@ int main() {
 
     graph.insertEdge(5, 0);
     graph.insertEdge(5, 18);
+    //graph.insertEdge(18, 5, false);
     graph.insertEdge(18, 100);
     graph.insertEdge(100, 2);
     graph.insertEdge(2, 5);
 
     graph.insertVertex(50);
-    graph.insertEdge(2, 50, true, 15);
+    graph.insertEdge(2, 50);
+    //graph.insertEdge(50, 2, false);
 
     graph.insertVertex(1);
     graph.insertEdge(50, 1);
@@ -38,25 +40,17 @@ int main() {
     graph.insertEdge(69, 999);
     graph.insertEdge(121, 999);
     graph.insertEdge(100, 999);
+    //graph.insertEdge(100, 999, false);
+    //graph.insertEdge(999, 100, false);
 
     graph.print();
 
-    vector<array<int, 2>> conn = graph.lookupVertex(50);
+    vector<int> path = graph.lookupShortestPath(100, 1);
 
-    cout << "Lookup 50: [";
-    for(array<int, 2> tuple : conn)
-        cout << "\t" << tuple.front();
-    cout << "\t]" << endl << endl;
-
-    cout << "2 --> 50 : " << graph.getWeight(2, 50) << endl << endl;
-
-    graph.setWeight(5, 2, 8);
-    cout << "5 --> 2 : " << graph.getWeight(5, 2) << endl << endl;
-
-    graph.removeWeight(2, 50);
-    graph.removeWeight(5, 2);
-
-    graph.print();
+    cout << "[";
+    for(int v : path)
+        cout << "\t" << v;
+    cout << "\t]" << endl;
 
     return 0;
 }

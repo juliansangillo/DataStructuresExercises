@@ -1,8 +1,11 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-#include<unordered_map>
+#include<utility>
+#include<list>
 #include<vector>
+#include<unordered_map>
+#include<queue>
 
 #include "Exception.h"
 
@@ -11,6 +14,60 @@ class Graph {
     private:
         std::unordered_map<T, int> vertexMap;
         std::unordered_map<T, std::unordered_map<T, int>> matrix;
+
+        bool search(T target, std::queue<std::pair<T, T>> vertex, std::unordered_map<T, T> &predecessor) {
+
+            using namespace std;
+
+            pair<T, T> vertPair;
+            T current;
+
+            while(!vertex.empty()) {
+                vertPair = vertex.front();
+                vertex.pop();
+
+                current = vertPair.first;
+
+                if(predecessor.find(current) != predecessor.end())
+                    continue;
+
+                predecessor.insert(vertPair);
+                
+                if(current == target)
+                    return true;
+
+                vector<array<T, 2>> next = this->lookupVertex(current);
+                for(array<T, 2> n : next)
+                    vertex.push(make_pair(n[0], current));
+            }
+
+            return false;
+        }
+
+        std::vector<T> traceback(T src, T dest, std::unordered_map<T, T> predecessor) {
+            
+            std::vector<T> path;
+            std::list<T> trace;
+
+            T current = dest;
+            T prev = predecessor.find(dest)->second;
+
+            while(current != src) {
+                trace.push_front(current);
+
+                current = prev;
+                prev = predecessor.find(current)->second;
+            }
+            trace.push_front(src);
+
+            while(!trace.empty()) {
+                path.push_back(trace.front());
+
+                trace.pop_front();
+            }
+
+            return path;
+        }
     public:
         Graph() { }
 
@@ -115,6 +172,30 @@ class Graph {
                     connections.push_back(std::array<T, 2> {y->first, y->second});
                     
             return connections;
+        }
+
+        std::vector<T> lookupShortestPath(T src, T dest) {
+
+            if(matrix.find(src) == matrix.end())
+                throw vertex_doesnt_exist<T>(src);
+
+            if(matrix.find(dest) == matrix.end())
+                throw vertex_doesnt_exist<T>(dest);
+
+            using namespace std;
+
+            queue<pair<T, T>> vertex;
+            unordered_map<T, T> predecessor;
+            vector<T> path;
+
+            vertex.push(make_pair(src, src));
+
+            bool found = this->search(dest, vertex, predecessor);
+
+            if(found)
+                path = this->traceback(src, dest, predecessor);
+
+            return path;
         }
 
         void setWeight(T vertX, T vertY, int weight, bool bothDirections = true) {
