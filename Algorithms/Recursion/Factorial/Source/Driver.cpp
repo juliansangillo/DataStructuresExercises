@@ -15,9 +15,12 @@ int main() {
 
 int factorialIterative(int num) {
 
-    //TODO Iterative code goes here
+    unsigned long total = 1;
+
+    for(int i = num; i > 1; i--)
+        total *= i;
     
-    return 0;
+    return total;
 }
 
 int factorialRecursive(int num) {
