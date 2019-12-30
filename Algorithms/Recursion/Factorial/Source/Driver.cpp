@@ -25,7 +25,8 @@ int factorialIterative(int num) {
 
 int factorialRecursive(int num) {
 
-    //TODO Recursive code goes here
-
-    return 0;
+    if(num == 1)
+        return num;
+    
+    return num * factorialRecursive(num - 1);
 }
