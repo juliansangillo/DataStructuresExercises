@@ -12,10 +12,37 @@
 template<class T>
 class Graph {
     private:
-        std::unordered_map<T, int> vertexMap;
         std::unordered_map<T, std::unordered_map<T, int>> matrix;
+        std::unordered_map<T, int> vertexMap;
 
-        bool search(T target, std::queue<std::pair<T, T>> vertex, std::unordered_map<T, T> &predecessor) {
+        struct Vertex {
+            static long vertexCounter; //!Initialization is after Graph class. vertexCounter = 0
+
+            int weight;
+            long count;
+
+            T curr;
+            T prev;
+
+            Vertex() {}
+
+            Vertex(int weight, T curr, T prev) {
+
+                count = ++vertexCounter;
+
+                this->weight = weight;
+                this->curr = curr;
+                this->prev = prev;
+
+            }
+
+            bool operator>(const Vertex& right) const {
+
+                return this->weight > right.weight || (this->weight == right.weight && this->count > right.count);
+            }
+        };
+
+        bool search(T target, std::queue<std::pair<T, T>> vertex, std::unordered_map<T, T>& predecessor) {
 
             using namespace std;
 
@@ -39,6 +66,35 @@ class Graph {
                 vector<array<T, 2>> next = this->lookupVertex(current);
                 for(array<T, 2> n : next)
                     vertex.push(make_pair(n[0], current));
+            }
+
+            return false;
+        }
+
+        bool search(T target, std::priority_queue<Vertex, std::vector<Vertex>, std::greater<Vertex>> vertex, std::unordered_map<T, T>& predecessor) {
+
+            using namespace std;
+
+            Vertex vert;
+            T current;
+
+            while(!vertex.empty()) {
+                vert = vertex.top();
+                vertex.pop();
+
+                current = vert.curr;
+
+                if(predecessor.find(current) != predecessor.end())
+                    continue;
+
+                predecessor.insert(make_pair(vert.curr, vert.prev));
+
+                if(current == target)
+                    return true;
+
+                vector<array<T, 2>> next = this->lookupVertex(current);
+                for(array<T, 2> n : next)
+                    vertex.push(Vertex(vert.weight + n[1], n[0], current));
             }
 
             return false;
@@ -106,6 +162,9 @@ class Graph {
 
             if(matrix[vertX][vertY] >= 1)
                 throw edge_already_exists<T>(vertX, vertY);
+
+            if(weight <= 0)
+                throw invalid_weight(weight);
 
             if(bidirectional) {
                 if(matrix[vertY][vertX] >= 1)
@@ -198,6 +257,30 @@ class Graph {
             return path;
         }
 
+        std::vector<T> lookupCheapestPath(T src, T dest) {
+
+            if(matrix.find(src) == matrix.end())
+                throw vertex_doesnt_exist<T>(src);
+
+            if(matrix.find(dest) == matrix.end())
+                throw vertex_doesnt_exist<T>(dest);
+
+            using namespace std;
+
+            priority_queue<Vertex, vector<Vertex>, greater<Vertex>> vertex;
+            unordered_map<T, T> predecessor;
+            vector<T> path;
+
+            vertex.push(Vertex(0, src, src));
+
+            bool found = this->search(dest, vertex, predecessor);
+
+            if(found)
+                path = this->traceback(src, dest, predecessor);
+
+            return path;
+        }
+
         void setWeight(T vertX, T vertY, int weight, bool bothDirections = true) {
 
             if(matrix.find(vertX) == matrix.end())
@@ -209,8 +292,8 @@ class Graph {
             if(matrix[vertX][vertY] == 0)
                 throw edge_doesnt_exist<T>(vertX, vertY);
 
-            if(weight < 0)
-                throw invalid_weight<T>(weight);
+            if(weight <= 0)
+                throw invalid_weight(weight);
 
             if(bothDirections) {
 
@@ -292,5 +375,8 @@ class Graph {
 
         }
 };
+
+template<class T>
+long Graph<T>::Vertex::vertexCounter = 0;
 
 #endif
