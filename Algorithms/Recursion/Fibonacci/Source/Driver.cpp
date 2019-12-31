@@ -8,7 +8,7 @@ int fibonacciRecursive(int);
 int main() {
 
     cout << "Iterative: " << fibonacciIterative(10) << endl;
-    cout << "Recursive: " << fibonacciRecursive(2) << endl;
+    cout << "Recursive: " << fibonacciRecursive(10) << endl;
 
     return 0;
 }
@@ -35,7 +35,11 @@ int fibonacciIterative(int index) {
 
 int fibonacciRecursive(int index) {
 
-    //TODO Recursive code goes here
+    if(index == 0)
+        return 0;
 
-    return 0;
+    if(index == 1)
+        return 1;
+
+    return fibonacciRecursive(index - 2) + fibonacciRecursive(index - 1);
 }
