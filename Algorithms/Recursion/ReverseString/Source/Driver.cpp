@@ -7,7 +7,7 @@ string reverse(string);
 
 int main() {
 
-    string str = "";
+    string str = "Julian Sangillo";
 
     cout << "String: " << str << endl;
     cout << "Reverse: " << reverse(str) << endl;
@@ -17,7 +17,8 @@ int main() {
 
 string reverse(string str) {
 
+    if(str.size() <= 1)
+        return str;
 
-
-    return "";
+    return reverse(str.substr(1)) + str[0];
 }
