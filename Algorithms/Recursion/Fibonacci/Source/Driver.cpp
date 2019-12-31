@@ -35,11 +35,8 @@ int fibonacciIterative(int index) {
 
 int fibonacciRecursive(int index) {
 
-    if(index == 0)
-        return 0;
-
-    if(index == 1)
-        return 1;
+    if(index < 2)
+        return index;
 
     return fibonacciRecursive(index - 2) + fibonacciRecursive(index - 1);
 }
