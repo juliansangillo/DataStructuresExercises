@@ -9,7 +9,7 @@ vector<T> insertionSort(vector<T>);
 
 int main() {
 
-    vector<int> numbers = {6, 5, 3, 1, 8, 7, 2, 4};
+    vector<int> numbers = {99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0};
 
     numbers = insertionSort(numbers);
 
