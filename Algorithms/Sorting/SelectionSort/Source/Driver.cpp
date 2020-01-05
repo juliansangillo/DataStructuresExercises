@@ -4,6 +4,10 @@
 using namespace std;
 
 template<typename T>
+void swapElements(typename vector<T>::iterator, typename vector<T>::iterator);
+template<typename T>
+typename vector<T>::iterator scanForSmallest(typename vector<T>::iterator, typename vector<T>::iterator);
+template<typename T>
 vector<T> selectionSort(vector<T>);
 
 int main() {
@@ -24,7 +28,34 @@ int main() {
 template<typename T>
 vector<T> selectionSort(vector<T> array) {
 
-    //Selection Sort code goes here
+    for(int sorted = 0; sorted < array.size() - 1; sorted++) {
+        typename vector<T>::iterator first = array.begin() + sorted;
+        typename vector<T>::iterator smallest = scanForSmallest<T>(first, array.end());
+
+        swapElements<T>(first, smallest);
+    }
     
     return array;
+}
+
+template<typename T>
+typename vector<T>::iterator scanForSmallest(typename vector<T>::iterator first, typename vector<T>::iterator last) {
+
+    typename vector<T>::iterator smallest = first;
+
+    typename vector<T>::iterator pos;
+    for(pos = first + 1; pos != last; pos++)
+        if(*pos < *smallest)
+            smallest = pos;
+
+    return smallest;
+}
+
+template<typename T>
+void swapElements(typename vector<T>::iterator first, typename vector<T>::iterator smallest) {
+
+    T temp = *first;
+    *first = *smallest;
+    *smallest = temp;
+
 }
