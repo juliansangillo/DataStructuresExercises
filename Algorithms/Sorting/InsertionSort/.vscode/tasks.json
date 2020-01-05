@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}\\Source\\*.cpp",
+                "-I",
+                "${workspaceFolder}\\Include",
+                "-o",
+                "${workspaceFolder}\\Bin\\insertion.exe"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "clear": true
+            }
+        },
+        {
+            "label": "Build & Run",
+            "type": "shell",
+            "command": "${workspaceFolder}\\Bin\\insertion",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "panel": "shared",
+                "clear": false
+            },
+            "dependsOn": ["Build"]
+        }
+    ]
+}
