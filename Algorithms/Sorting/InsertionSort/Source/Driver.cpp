@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -24,7 +25,22 @@ int main() {
 template<typename T>
 vector<T> insertionSort(vector<T> array) {
 
-    //Insertion Sort code goes here
+    list<T> arrayList(array.begin(), array.end());
 
-    return array;
+    typename list<T>::iterator i;
+    for(i = next(arrayList.begin()); i != arrayList.end();) {
+        typename list<T>::iterator j = i;
+        
+        while(j != arrayList.begin() && *prev(j) > *i)
+            j = prev(j);
+
+        if(j != i) {
+            arrayList.insert(j, *i);
+            i = arrayList.erase(i);
+        }
+        else
+            i = next(i);
+    }
+
+    return vector<T>(arrayList.begin(), arrayList.end());
 }
