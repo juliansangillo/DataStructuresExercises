@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ template<typename T>
 vector<T> quickSort(vector<T>);
 
 int main() {
+
+    srand(time(NULL));
 
     vector<int> numbers = {232, 419, 370, 350, 318, 26, 312, 190, 211, 49, 488, 338, 348, 60, 16, 186, 268, 345, 457, 201, 87, 273, 
                             168, 449, 368, 289, 76, 31, 138, 114, 84, 160, 163, 239, 41, 427, 397, 266, 444, 291, 384, 7, 275, 148, 
@@ -38,7 +41,10 @@ vector<T> quickSort(vector<T> array) {
         return array;
 
     typename vector<T>::iterator p = pivotOf(array);
-    typename vector<T>::iterator i = array.end() - 1;
+    typename vector<T>::iterator i = array.begin();
+
+    swapElements<T>(p, i);
+    i = array.end() - 1;
 
     while(i != p) {
         if(i > p) {
@@ -81,7 +87,39 @@ vector<T> quickSort(vector<T> array) {
 template<typename T>
 typename vector<T>::iterator pivotOf(vector<T>& array) {
 
-    return array.begin();
+    if(array.size() < 3)
+        return array.begin();
+
+    int index[3];
+    int len = array.size();
+
+    if(len == 3) {
+        index[0] = 0;
+        index[1] = 1;
+        index[2] = 2;
+    }
+    else {
+        index[0] = rand() % len;
+
+        index[1] = rand() % len;
+        while(index[1] == index[0])
+            index[1] = rand() % len;
+
+        index[2] = rand() % len;
+        while(index[2] == index[1] || index[2] == index[0])
+            index[2] = rand() % len;
+    }
+
+    typename vector<T>::iterator first = array.begin() + index[0];
+    typename vector<T>::iterator second = array.begin() + index[1];
+    typename vector<T>::iterator third = array.begin() + index[2];
+
+    if((*first >= *second && *first < *third) || (*first >= *third && *first < *second))
+        return first;
+    else if((*second >= *first && *second < *third) || (*second >= *third && *second < *first))
+        return second;
+    else
+        return third;
 }
 
 template<typename T>
