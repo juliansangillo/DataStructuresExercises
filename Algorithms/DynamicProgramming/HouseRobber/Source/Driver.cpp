@@ -23,21 +23,35 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
-int rob(vector<int>);
+typedef map<vector<int>, int> MemoizeMap;
+
+class Robber {
+    private:
+        MemoizeMap cache;
+    public:
+        int rob(vector<int>);
+};
 
 int main() {
 
+    Robber bob;
+
     vector<int> houses = {5, 4, 10, 20, 35, 6, 8, 3, 12};
 
-    cout << "Money Stolen: $" << rob(houses) << endl;
+    cout << "Money Stolen: $" << bob.rob(houses) << endl;
 
     return 0;
 }
 
-int rob(vector<int> houses) {
+int Robber::rob(vector<int> houses) {
+    
+    MemoizeMap::iterator m = this->cache.find(houses);
+    if(m != this->cache.end())
+        return m->second;
 
     if(houses.size() == 0)
         return 0;
@@ -52,8 +66,11 @@ int rob(vector<int> houses) {
     if(houses.size() > 3)
         secondSet = vector<int>(houses.begin() + 3, houses.end());
 
-    profit1 = *houses.begin() + rob(firstSet);
-    profit2 = *next(houses.begin()) + rob(secondSet);
+    profit1 = houses.front() + this->rob(firstSet);
+    profit2 = *next(houses.begin()) + this->rob(secondSet);
 
-    return profit1 >= profit2 ? profit1 : profit2;
+    int result = profit1 >= profit2 ? profit1 : profit2;
+    this->cache.insert(make_pair(houses, result));
+
+    return result;
 }
