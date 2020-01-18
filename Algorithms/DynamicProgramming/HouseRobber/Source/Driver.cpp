@@ -26,18 +26,34 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
 
 using namespace std;
 
-int robHouses(vector<int>);
+int rob(vector<int>);
 
 int main() {
 
-    vector<int> houses = {1, 2, 3, 1};
+    vector<int> houses = {5, 4, 10, 20, 35, 6, 8, 3, 12};
 
-    cout << "Money Stolen: $" << robHouses(houses) << endl;
+    cout << "Money Stolen: $" << rob(houses) << endl;
 
     return 0;
 }
 
-int robHouses(vector<int> houses) {
+int rob(vector<int> houses) {
 
-    return 0;
+    if(houses.size() == 0)
+        return 0;
+    else if(houses.size() == 1)
+        return houses.front();
+
+    int profit1, profit2;
+    vector<int> firstSet, secondSet;
+    
+    if(houses.size() > 2)
+        firstSet = vector<int>(houses.begin() + 2, houses.end());
+    if(houses.size() > 3)
+        secondSet = vector<int>(houses.begin() + 3, houses.end());
+
+    profit1 = *houses.begin() + rob(firstSet);
+    profit2 = *next(houses.begin()) + rob(secondSet);
+
+    return profit1 >= profit2 ? profit1 : profit2;
 }
