@@ -23,19 +23,33 @@ Explanation: There are three ways to climb to the top.
 */
 
 #include <iostream>
+#include <map>
 
 using namespace std;
 
+typedef map<int, unsigned long> MemoizeMap;
+
 class Climber {
+    private:
+        MemoizeMap cache;
     public:
-        int climbStairs(int);
+        Climber() {
+            
+            cache.insert(make_pair(0, 0));
+            cache.insert(make_pair(1, 1));
+            cache.insert(make_pair(2, 2));
+            cache.insert(make_pair(3, 3));
+
+        }
+
+        unsigned long climbStairs(int);
 };
 
 int main() {
 
     Climber mike;
 
-    int stairs = 7;
+    int stairs = 100;
 
     cout << "Number of stairs: " << stairs << endl;
     cout << "Number of ways to climb: " << mike.climbStairs(stairs) << endl;
@@ -43,10 +57,14 @@ int main() {
     return 0;
 }
 
-int Climber::climbStairs(int n) {
+unsigned long Climber::climbStairs(int n) {
 
-    if(n <= 3)
-        return n;
+    MemoizeMap::iterator s = cache.find(n);
+    if(s != cache.end())
+        return s->second;
 
-    return climbStairs(n - 1) + climbStairs(n - 2);
+    unsigned long result = this->climbStairs(n - 1) + this->climbStairs(n - 2);
+    cache.insert(make_pair(n, result));
+
+    return result;
 }
