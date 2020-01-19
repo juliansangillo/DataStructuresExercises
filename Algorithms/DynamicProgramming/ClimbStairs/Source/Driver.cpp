@@ -35,7 +35,7 @@ int main() {
 
     Climber mike;
 
-    int stairs = 0;
+    int stairs = 7;
 
     cout << "Number of stairs: " << stairs << endl;
     cout << "Number of ways to climb: " << mike.climbStairs(stairs) << endl;
@@ -45,7 +45,8 @@ int main() {
 
 int Climber::climbStairs(int n) {
 
+    if(n <= 3)
+        return n;
 
-
-    return 0;
+    return climbStairs(n - 1) + climbStairs(n - 2);
 }
