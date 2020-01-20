@@ -11,7 +11,7 @@ class Investor {
 int main() {
 
     Investor julian;
-    vector<int> stock = {7, 1, 5, 3, 6, 4};
+    vector<int> stock = {10, 5, 9, 99, 56, 8, 12, 17, 1, 3};
 
     cout << "Stock Prices by day: \t[\t";
     for(int i = 0; i < stock.size(); i++)
@@ -25,7 +25,15 @@ int main() {
 
 int Investor::maxProfit(vector<int> prices) {
 
-    
+    int minStock = INT32_MAX;
+    int maxDiff = 0;
 
-    return 0;
+    vector<int>::iterator i;
+    for(i = prices.begin(); i != prices.end(); i++)
+        if(*i < minStock)
+            minStock = *i;
+        else if(*i - minStock > maxDiff)
+            maxDiff = *i - minStock;
+
+    return maxDiff;
 }
