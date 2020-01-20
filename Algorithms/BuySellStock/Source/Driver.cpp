@@ -25,7 +25,7 @@ int main() {
 
 int Investor::maxProfit(vector<int> prices) {
 
-
+    
 
     return 0;
 }
